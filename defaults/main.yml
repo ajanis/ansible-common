@@ -22,6 +22,7 @@ common_packages:
   - screen
   - sudo
   - tzdata
+  - openssh-server
 
 common_pip_pkgs:
   - ssh-ldap-pubkey
