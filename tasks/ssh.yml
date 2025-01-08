@@ -1,4 +1,9 @@
 ---
+- name: ssh | Install ssh server
+  ansible.builtin.package:
+    name: openssh-server
+    state: present
+
 - name: ssh | Create /var/run/sshd
   ansible.builtin.file:
     state: directory
