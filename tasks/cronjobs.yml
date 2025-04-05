@@ -28,7 +28,7 @@
   tags:
     - cronjobs
   when:
-    - common_cronjobs | default None is not none
+    - common_cronjobs | default(None) is not none
     - common_cronjobs | length > 0
   register: cronjob_result
   until: cronjob_result is succeeded
