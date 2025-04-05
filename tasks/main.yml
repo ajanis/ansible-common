@@ -62,7 +62,14 @@
     apply:
       tags:
         - common-sudoers
-
+- name: Configure cron jobs
+  tags:
+    - cronjobs
+  ansible.builtin.include_tasks:
+    file: cronjobs.yml
+    apply:
+      tags:
+        - cronjobs
 - name: Configure Timezone Info
   tags:
     - common-timezone
