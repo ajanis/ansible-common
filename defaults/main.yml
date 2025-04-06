@@ -48,8 +48,8 @@ common_grub_configs:
   - regexp: '^GRUB_SERIAL_COMMAND=".*"$'
     line: GRUB_SERIAL_COMMAND="serial --speed=115200 --unit={{ serial_tty_device | default('0') }} --word=8 --parity=no --stop=1"
 
-common_blacklist_kernel_modules:
-common_kernel_modules:
+common_blacklist_kernel_modules: []
+common_kernel_modules: []
 common_systemd_serial_getty_src: /lib/systemd/system/serial-getty@.service
 common_systemd_serial_getty_dest: /etc/systemd/system/serial-getty@ttyS{{ serial_tty_device | default('0') }}.service
 
