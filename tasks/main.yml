@@ -26,6 +26,14 @@
       tags:
         - common-hostfile
 
+- name: Copy files
+  tags:
+    - common-copyfiles
+  ansible.builtin.include_tasks:
+    file: copyfiles.yml
+    apply:
+      tags:
+        - common-copyfiles
 - name: Configure SSHD
   tags:
     - common-sshd
