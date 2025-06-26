@@ -21,8 +21,15 @@
 
 - name: root-authorized-keys | Generate complete list of authorized_keys from existing file and keys found in ssh_users
   ansible.builtin.set_fact:
-    combined_keys: "{{ (((root_authorized_keys.content|default('') | b64decode) | split('\n')) + (ssh_users | dict2items | map(attribute='value.pubkey'))) | flatten
-      | reject('equalto', '') | map('regex_replace', '^(ssh-[a-z0-9]+)\\s(.+)\\s.*$', '\\1 \\2') | unique  }}"
+    combined_keys: |-
+      {%- set curkeys = ((root_authorized_keys.content | default('') | b64decode) | split('\n') | reject('equalto', '') | map('regex_replace', '^(ssh-[a-z0-9]+)\\s(.+)\\s.*$', '\\1 \\2') | unique) -%}
+      {%- set newkeys = (ldap_users | json_query('[*].attributes.sshPublicKey') | reject('equalto', '') | map('regex_replace', '^(ssh-[a-z0-9]+)\\s(.+)\\s.*$', '\\1 \\2') | unique) -%}
+      {%- set allkeys = (curkeys) + (newkeys) -%}
+      {{ allkeys | unique | sort }}
+
+- name: Debug - print all ssh public keys
+  ansible.builtin.debug:
+    msg: "{{ combined_keys }}"
 
 - name: root-authorized-keys | Generate root authorized_keys file
   ansible.builtin.template:
