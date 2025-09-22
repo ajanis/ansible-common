@@ -9,5 +9,12 @@ ff02::2 ip6-allrouters
 ff02::3 ip6-allhosts
 
 {% for host in  q('ansible.builtin.inventory_hostnames', common_hostfile_groups | join(':')) %}
-{{ lookup('dig', host ~ '.' ~ www_domain) }} {{host}}.{{ www_domain }} {{ host }}
+{%- set target_ip = [] -%}
+{%- set target_ip = lookup('dig', host ~ '.' ~ www_domain, real_empty=true) -%}
+{%- if target_ip == [] %}
+{%- set target_ip = ansible_host -%}
+{%- endif -%}
+{% if target_ip is ansible.utils.ipv4 %}
+{{ target_ip  }} {{host}}.{{ www_domain }} {{ host }}
+{% endif %}
 {% endfor %}
