@@ -8,7 +8,7 @@
     var: services_discovered
 
 - name: autoupdate | Enable/Disable autoupdate services
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: "{{ item }}"
     state: "{{ 'started' if common_enable_autoupdate else 'stopped' }}"
     enabled: "{{ true if common_enable_autoupdate else false }}"

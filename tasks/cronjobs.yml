@@ -10,7 +10,7 @@
   changed_when: cron_package_result is changed
 
 - name: Ensure cron service is running
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: "{{ 'cron' if ansible_os_family == 'Debian' else 'crond' if ansible_os_family == 'RedHat' }}"
     state: started
     enabled: true
