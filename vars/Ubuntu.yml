@@ -1,12 +1,11 @@
 ---
-common_apt_pkgs:
+common_pkgs:
   - apt-utils
   - freeipmi-tools
-  - python3-apt
-  - python3-debian
-  - python3-software-properties
   - software-properties-common
-
+  - python{{ ansible_facts['python']['version']['major'] }}-debian
+  - python{{ ansible_facts['python']['version']['major'] }}-software-properties
+  - python{{ ansible_facts['python']['version']['major'] }}-apt
 autoupdate_services:
   - apt-daily-upgrade.timer
   - apt-daily.timer
@@ -32,7 +31,7 @@ common_cockpit_pkgs:
 common_cockpit_service: cockpit.socket
 common_cockpit_allowed_ports:
   - cockpit
-openldap_ldap_pubkey_wrapper: /usr/local/bin/ssh-ldap-pubkey-wrapper
+openldap_ldap_pubkey_wrapper: /usr/bin/sss_ssh_authorizedkeys
 openldap_ldap_pubkey_user: nobody
 
 common_mdns_pkgs:

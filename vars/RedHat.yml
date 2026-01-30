@@ -1,11 +1,11 @@
 ---
-common_rpm_pkgs:
+common_pkgs:
   - bzip2-devel
   - freeipmi
   - libffi-devel
   - openssl-devel
-  - python3-rpm
   - vim-enhanced
+  - python{{ ansible_facts['python']['version']['major'] }}-rpm
 
 grub_config: /boot/grub2/grub.cfg
 grub_update_cmd: /usr/sbin/grub2-mkconfig
@@ -30,6 +30,9 @@ common_cockpit_service: cockpit.socket
 common_selinux_state: disabled
 common_cockpit_allowed_ports:
   - cockpit
+
+openldap_ldap_pubkey_wrapper: /usr/bin/sss_ssh_authorizedkeys
+openldap_ldap_pubkey_user: nobody
 
 common_mdns_pkgs:
   - avahi
